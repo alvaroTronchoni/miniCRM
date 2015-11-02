@@ -77,9 +77,9 @@ var confDB = {
 
     onConfirm:function(buttonIndex){
         if(buttonIndex==1){
-            this.createDB();
+           this.cretaDB();
         }
-    }
+    },
 
     createDB: function(){
         console.log("No existe la base de datos");
@@ -131,14 +131,6 @@ var app = {
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
-        /*
-        var parentElement = document.getElementById(id); 
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
-
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');*/
-
         console.log('Received Event: ' + id);
         //iniciamos base de datos
         confDB.initialize();
