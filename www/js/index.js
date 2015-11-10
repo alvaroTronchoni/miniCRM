@@ -26,7 +26,7 @@ var cargarDB ={
     cargaDB: function(){
         console.log("Cargar la base de datos;");
         //transaccion
-        this.db.transaction(this.mostrarDB,this.mosstrarDBerror);        
+        this.db.transaction(this.mostrarDB,this.mostrarDBerror);        
     },
     mostrarDB: function(tx){
         var sql = "select * from usuarios";
@@ -42,14 +42,14 @@ var cargarDB ={
                 }
             },
             function(tx,error){
-                this.mosstrarDBerror(error);
+                this.mostrarDBerror;
             }
             );
 
             
     },
-    mosstrarDBerror: function(err){
-        console.log("Se ha producido un error en la creacion de la base de datos: "+error.code)
+    mostrarDBerror: function(err){
+        console.log("Se ha producido un error en la creacion de la base de datos: "+error.code);
     }
 
 };
@@ -64,20 +64,11 @@ var confDB = {
         this.db = window.openDatabase("localDB","1.0","Base de datos de prueba",2*1024*1024);
         //preguntamos si es necesario crear la base de datos
         if(existe_db==null){
-            navigator.notification.confirm(
-                'La base de datos no existe',
-                this.onConfirm(),
-                'Base de datos',
-                ['Crear','Salir']
-                );
+            console.log("Creamos la base de datos");
+            this.createDB();
         }else{
+            console.log("Cargamos la base de datoos");
             cargarDB.initialize();
-        }
-    },
-
-    onConfirm:function(buttonIndex){
-        if(buttonIndex==1){
-           this.cretaDB();
         }
     },
 
@@ -88,7 +79,7 @@ var confDB = {
         this.db.transaction(this.createLocalDB,this.createDBError,this.createDBSucc);        
     },
     createLocalDB: function(tx){
-        var sql="create table if no exist usuarios ("+
+        var sql="create table if not exists usuarios ("+
             "id integer primary key autoincrement,"+
             "nombre varchar(50),"+
             "apellidos varchar(256),"+
@@ -102,7 +93,7 @@ var confDB = {
         tx.executeSql(sql);
     },
     createDBError: function(err){
-        console.log("Se ha producido un error en la creacion de la base de datos: "+error.code)
+        console.log("Se ha producido un error en la creacion de la base de datos: "+error.code);
     },
     createDBSucc: function(){
         console.log("Se ha generado la base de datos con exito");
@@ -131,7 +122,7 @@ var app = {
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
-        console.log('Received Event: ' + id);
+        console.log('Recivido Evento: ' + id);
         //iniciamos base de datos
         confDB.initialize();
 
